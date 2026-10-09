@@ -21,7 +21,7 @@ Under a fixed fast-memory budget, we test whether a dynamic routing policy can:
 
 ## Research question
 
-Can a limited high-precision budget be spent more effectively by routing activation outliers dynamically rather than applying a uniform low-precision policy across the full computation?
+Can a limited high-precision budget be spent more effectively by routing activation outliers dynamically rather than applying a uniform low-precision policy across the full computation? In the current prototype, the budget is represented by the number of columns kept on the high-precision path or by a simple tile-local budget proxy.
 
 ## Scope
 
@@ -67,16 +67,22 @@ cado/
 
 ## Planned experiments
 
-1. Correctness: compare FP32 reference against CADO decomposition.
+1. Correctness: compare FP32 reference against the CADO decomposition.
 2. Outlier density sweeps: understand how sensitive the method is to the frequency of outliers.
-3. Threshold sweeps: determine how routing policy affects accuracy and runtime.
-4. Cache-aware budget analysis: study how fast-memory constraints affect the tradeoff.
+3. Threshold sweeps: determine how routing policy affects approximation quality.
+4. Cache-aware budget analysis: study how a local fast-memory budget affects the tradeoff.
 5. Baseline comparison: compare against uniform INT8 and static mixed-precision baselines.
-6. Dynamic routing analysis: check whether the method meaningfully improves the quality–latency frontier.
+6. Dynamic routing analysis: check whether the method meaningfully improves the quality–cost frontier for the synthetic workloads in this repo.
 
 ## Expected outcome
 
-A convincing result would show that, under a fixed fast-memory budget, CADO yields a better quality–latency tradeoff than a uniform low-precision strategy for a meaningful regime of outlier density and matrix shapes.
+A convincing result for this prototype would show that, under a fixed fast-memory budget, CADO yields a better quality–cost tradeoff than a uniform low-precision strategy for a meaningful regime of outlier density and matrix shapes.
+
+## Results
+
+The current prototype shows the expected pattern: a small routed subset improves accuracy under a fixed budget compared with a static or uniform low-precision baseline.
+
+![CADO summary plot](results/figures/cado_summary.png)
 
 ## Local setup
 
@@ -89,4 +95,4 @@ pip install -r requirements.txt
 
 ## Current status
 
-The repo currently includes a small set of numerical experiments validating the prototype idea and a fixed-budget comparison. The work remains a focused research scaffold rather than a full end-to-end acceleration stack.
+The repo currently includes a small set of numerical experiments validating the prototype idea, including a fixed-budget comparison and a cache-aware tile sweep. The work remains a focused research scaffold rather than a full end-to-end acceleration stack or a general-purpose inference library.

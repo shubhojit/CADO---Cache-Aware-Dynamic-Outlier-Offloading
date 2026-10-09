@@ -1,0 +1,4 @@
+method,relative_error,shape
+fp32_reference,0.0,"(128, 64)"
+cado,0.0031291297636926174,"(128, 64)"
+uniform_int8,0.037619102746248245,"(128, 64)"
